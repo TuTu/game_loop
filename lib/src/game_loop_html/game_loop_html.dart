@@ -42,6 +42,7 @@ typedef void GameLoopTouchEventFunction(GameLoop gameLoop, GameLoopTouch touch);
 /** The game loop */
 class GameLoopHtml extends GameLoop {
   final Element element;
+  final bool processAllKeyboardEvents;
   int _frameCounter = 0;
   bool _initialized = false;
   bool _interrupt = false;
@@ -89,8 +90,12 @@ class GameLoopHtml extends GameLoop {
   GameLoopTouchSet _touchSet;
   GameLoopTouchSet get touchSet => _touchSet;
 
-  /** Construct a new game loop attaching it to [element] */
-  GameLoopHtml(this.element) : super() {
+  /** Construct a new game loop attaching it to [element]. 
+   * If [processAllKeyboardEvents] is false, keyboard events are only processed, 
+   * if the body is the active element. That means while input elements are 
+   * focused, no keyboard events are processed. 
+   */
+  GameLoopHtml(this.element, {this.processAllKeyboardEvents: true}) : super() {
     _keyboard = new Keyboard(this);
     _mouse = new Mouse(this);
     _gamepad0 = new GameLoopGamepad(this);
@@ -105,13 +110,15 @@ class GameLoopHtml extends GameLoop {
   }
 
   void _processKeyboardEvents() {
-    for (KeyboardEvent keyboardEvent in _keyboardEvents) {
-      DigitalButtonEvent event;
-      bool down = keyboardEvent.type == "keydown";
-      double time = GameLoop.timeStampToSeconds(keyboardEvent.timeStamp);
-      int buttonId = keyboardEvent.keyCode;
-      event = new DigitalButtonEvent(buttonId, down, frame, time);
-      _keyboard.digitalButtonEvent(event);
+    if(processAllKeyboardEvents || document.activeElement == document.body) {
+      for (KeyboardEvent keyboardEvent in _keyboardEvents) {
+        DigitalButtonEvent event;
+        bool down = keyboardEvent.type == "keydown";
+        double time = GameLoop.timeStampToSeconds(keyboardEvent.timeStamp);
+        int buttonId = keyboardEvent.keyCode;
+        event = new DigitalButtonEvent(buttonId, down, frame, time);
+        _keyboard.digitalButtonEvent(event);
+      }
     }
     _keyboardEvents.clear();
   }
