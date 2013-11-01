@@ -1,5 +1,4 @@
 
-import 'dart:html';
 import 'package:game_loop/game_loop_isolate.dart';
 
 GameLoopIsolate gameLoop;

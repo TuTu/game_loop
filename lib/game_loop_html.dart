@@ -21,7 +21,6 @@
 library game_loop_html;
 
 import 'dart:html';
-import 'dart:json';
 import 'package:game_loop/game_loop_common.dart';
 export 'package:game_loop/game_loop_common.dart';
 

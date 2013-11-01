@@ -42,10 +42,10 @@ void update(GameLoopHtml gameLoop) {
     print('wheel: ${gameLoop.mouse.wheelDx} ${gameLoop.mouse.wheelDy}');
   }
   return;
-  print('frame: ${gameLoop.frame}');
-  print('gameTime: ${gameLoop.gameTime}');
-  print('time: ${gameLoop.time}');
-  print('dt: ${gameLoop.dt}');
+//  print('frame: ${gameLoop.frame}');
+//  print('gameTime: ${gameLoop.gameTime}');
+//  print('time: ${gameLoop.time}');
+//  print('dt: ${gameLoop.dt}');
 }
 
 void render(GameLoopHtml gameLoop) {
