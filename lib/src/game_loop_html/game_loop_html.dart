@@ -39,6 +39,12 @@ typedef void GameLoopPointerLockChangeFunction(GameLoop gameLoop);
 /** Called whenever a touch event begins */
 typedef void GameLoopTouchEventFunction(GameLoop gameLoop, GameLoopTouch touch);
 
+/**
+ * Called from inside keydown. Process the event, possibly
+ * preventing default.
+ */
+typedef void GameLoopKeyDownHandler(KeyboardEvent event);
+
 /** The game loop */
 class GameLoopHtml extends GameLoop {
   final Element element;
@@ -274,6 +280,10 @@ class GameLoopHtml extends GameLoop {
 
   final List<KeyboardEvent> _keyboardEvents = new List<KeyboardEvent>();
   void _keyDown(KeyboardEvent event) {
+    if (onKeyDown != null) {
+      onKeyDown(event);
+    }
+
     _keyboardEvents.add(event);
   }
 
@@ -367,4 +377,7 @@ class GameLoopHtml extends GameLoop {
   GameLoopTouchEventFunction onTouchStart;
   /** Callled when a touch ends. */
   GameLoopTouchEventFunction onTouchEnd;
+
+  /** Called when key is down. */
+  GameLoopKeyDownHandler onKeyDown;
 }
