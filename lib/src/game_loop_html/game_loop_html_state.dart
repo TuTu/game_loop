@@ -1,6 +1,6 @@
 part of game_loop_html;
 
-abstract class GameLoopHtmlState extends GameLoopState {
+class GameLoopHtmlState extends GameLoopState {
   GameLoopFullscreenChangeFunction onFullScreenChange;
   GameLoopKeyDownHandler onKeyDown;
   GameLoopPointerLockChangeFunction onPointerLockChange;
