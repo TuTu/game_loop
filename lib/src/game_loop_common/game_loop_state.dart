@@ -20,6 +20,42 @@
 
 part of game_loop_common;
 
-abstract class GameLoopState {
+/** Collects together a set of GameLoop handlers into a single object.
+ * 
+ * This is very useful if your game switches back and forth between sets of
+ * handlers (such as switching from an intro, menu, or gameplay state.)
+ * 
+ * Use GameLoop#setState() to set the games current state:
+ * 
+ *     menu_state = new GameLoopState(onUpdate: (gameLoop) { ... });
+ *     gameLoop.setState(menu_state);
+ *     
+ * If you want to track state specific information, you should consider creating
+ * a subclass of GameState. You can then pass this in to the GameLoop. In order
+ * access the properties of your instances, you'll need to set the handlers
+ * you are going to use in your constructor.
+ * 
+ *     class MenuState extends GameLoopHtmlState {
+ *         List<String> options;
+ *         int selected;
+ *         
+ *         MenuState(this.options, this.selected) {
+ *           onRender = (gameLoop) => this._onRender(gameLoop);
+ *         }
+ *         
+ *         _onRender(GameLoop gameLoop) {
+ *           // Render the menu here
+ *         }
+ *     }
+ * 
+ * You can then create an instance of this custom state and set it like any
+ * other.
+ * 
+ *     custom_menu_state = new MenuState(['Start', 'Quit'], 0);
+ *     gameLoop.setState(custom_menu_state);
+ * 
+ * See the /examples folder for a working example.
+ */
+class GameLoopState {
   GameLoopUpdateFunction onUpdate;
 }

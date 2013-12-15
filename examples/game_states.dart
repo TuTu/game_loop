@@ -5,6 +5,9 @@ GameLoopHtml gameLoop;
 CanvasRenderingContext2D canvas;
 
 // Create a simple state which no custom methods or state properties
+//
+// To do this without creating a custom class, just pass your unique handler
+// functions in to the `GameLoopHtmlState` constructor.
 GameLoopHtmlState initial_state =
   new GameLoopHtmlState(
       onRender: (GameLoopHtml loop) {
