@@ -5,19 +5,22 @@ GameLoopHtml gameLoop;
 CanvasRenderingContext2D canvas;
 
 class CustomState extends GameLoopHtmlState {
-  CustomState() :
-    super(onRender: (GameLoopHtml loop) {
-      print("Render CustomState");
+  String name;
+  
+  CustomState(this.name) {
+    onRender = (GameLoopHtml loop) {
+      print("Render $name");
       canvas.clearRect(0, 0, 640, 480);
-      canvas.strokeText("Custom State", 0, 100);
-    },
-    onKeyDown: (KeyboardEvent event) {
+      canvas.strokeText(name, 0, 100);
+    };
+    onKeyDown = (KeyboardEvent event) {
       print("Key event");
       gameLoop.setState(initial_state);
-    });
+    };
+  }
 }
 
-CustomState custom_state = new CustomState();
+CustomState custom_state = new CustomState("Custom State 1");
 
 GameLoopHtmlState initial_state =
   new GameLoopHtmlState(
