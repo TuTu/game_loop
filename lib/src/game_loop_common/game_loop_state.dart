@@ -18,11 +18,8 @@
   3. This notice may not be removed or altered from any source distribution.
 */
 
-library game_loop_common;
+part of game_loop_common;
 
-part 'src/game_loop_common/game_loop.dart';
-part 'src/game_loop_common/game_loop_timer.dart';
-part 'src/game_loop_common/game_loop_position_input.dart';
-part 'src/game_loop_common/game_loop_digital_input.dart';
-part 'src/game_loop_common/game_loop_analog_input.dart';
-part 'src/game_loop_common/game_loop_state.dart';
+abstract class GameLoopState {
+  GameLoopUpdateFunction onUpdate;
+}
