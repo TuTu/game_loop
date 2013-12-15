@@ -40,7 +40,7 @@ part of game_loop_common;
  *         int selected;
  *         
  *         MenuState(this.options, this.selected) {
- *           onRender = (gameLoop) => this._onRender(gameLoop);
+ *           onRender = (gameLoop) => _onRender(gameLoop);
  *         }
  *         
  *         _onRender(GameLoop gameLoop) {

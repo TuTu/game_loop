@@ -31,17 +31,21 @@ class CustomState extends GameLoopHtmlState {
   GameLoopHtmlState nextState;
   
   CustomState(this.name, this.nextState) {
-    onRender = (GameLoopHtml loop) {
-      print("Render $name");
-      canvas.clearRect(0, 0, 640, 480);
-      canvas.strokeText(name, 0, 100);
-      
-      _renderSquare();
-    };
-    onKeyDown = (KeyboardEvent event) {
-      print("Key event");
-      gameLoop.setState(nextState);
-    };
+    onRender = (GameLoopHtml gameLoop) => _onRender(gameLoop);
+    onKeyDown = (KeyboardEvent event) => _onKeyDown(event);
+  }
+  
+  _onKeyDown(KeyboardEvent event) {
+    print("Key event");
+    gameLoop.setState(nextState);
+  }
+  
+  _onRender(GameLoopHtml gameLoop) {
+    print("Render $name");
+    canvas.clearRect(0, 0, 640, 480);
+    canvas.strokeText(name, 0, 100);
+    
+    _renderSquare();
   }
   
   _renderSquare() {
