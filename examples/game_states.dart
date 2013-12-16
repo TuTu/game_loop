@@ -9,13 +9,15 @@ CanvasRenderingContext2D canvas;
 // To do this without creating a custom class, just pass your unique handler
 // functions in to the `GameLoopHtmlState` constructor.
 GameLoopHtmlState initial_state =
-  new GameLoopHtmlState(
+  new SimpleHtmlState(
       onRender: (GameLoopHtml loop) {
         print("Render initial_state");
         canvas.clearRect(0, 0, 640, 480);
         canvas.strokeText("Initial State", 0, 100);
       },
       onKeyDown: (KeyboardEvent event) {
+        event.preventDefault();
+
         print("Key event");
         print("Switching to $custom_state_1");
         print("Rendering with ${custom_state_1.onRender}}");
@@ -29,27 +31,50 @@ GameLoopHtmlState initial_state =
 class CustomState extends GameLoopHtmlState {
   String name;
   GameLoopHtmlState nextState;
-  
-  CustomState(this.name, this.nextState) {
-    onRender = (GameLoopHtml gameLoop) => _onRender(gameLoop);
-    onKeyDown = (KeyboardEvent event) => _onKeyDown(event);
-  }
-  
-  _onKeyDown(KeyboardEvent event) {
+
+  CustomState(this.name, this.nextState);
+
+  onKeyDown(KeyboardEvent event) {
+    event.preventDefault();
+
     print("Key event");
     gameLoop.setState(nextState);
   }
-  
-  _onRender(GameLoopHtml gameLoop) {
+
+  onRender(GameLoopHtml gameLoop) {
     print("Render $name");
     canvas.clearRect(0, 0, 640, 480);
     canvas.strokeText(name, 0, 100);
-    
+
     _renderSquare();
   }
-  
+
   _renderSquare() {
     canvas.fillRect(0, 0, 20, 20);
+  }
+
+  void onFullScreenChange(GameLoop gameLoop) {
+    // IGNORED
+  }
+
+  void onPointerLockChange(GameLoop gameLoop) {
+    // IGNORED
+  }
+
+  void onResize(GameLoop gameLoop) {
+    // IGNORED
+  }
+
+  void onTouchEnd(GameLoop gameLoop, GameLoopTouch touch) {
+    // IGNORED
+  }
+
+  void onTouchStart(GameLoop gameLoop, GameLoopTouch touch) {
+    // IGNORED
+  }
+
+  void onUpdate(GameLoop gameLoop) {
+    // IGNORED
   }
 }
 
@@ -60,8 +85,8 @@ main() {
   CanvasElement element = querySelector(".game-element");
   gameLoop = new GameLoopHtml(element);
   canvas = element.context2D;
-  
+
   gameLoop.setState(initial_state);
-  
+
   gameLoop.start();
 }

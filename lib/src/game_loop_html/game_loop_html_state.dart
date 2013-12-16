@@ -21,32 +21,105 @@
 part of game_loop_html;
 
 /** A set of GameLoop handlers for HTML games.
- * 
+ *
  * See GameLoopState for an example of creating and using a GameState.
  */
-class GameLoopHtmlState extends GameLoopState {
-  GameLoopFullscreenChangeFunction onFullScreenChange;
-  GameLoopKeyDownHandler onKeyDown;
-  GameLoopPointerLockChangeFunction onPointerLockChange;
-  GameLoopRenderFunction onRender;
-  GameLoopResizeFunction onResize;
-  GameLoopTouchEventFunction onTouchEnd;
-  GameLoopTouchEventFunction onTouchStart;
-  
-  GameLoopHtmlState(
-      { GameLoopFullscreenChangeFunction onFullScreenChange: null,
-        GameLoopKeyDownHandler onKeyDown: null,
-        GameLoopPointerLockChangeFunction onPointerLockChange: null,
-        GameLoopRenderFunction onRender: null,
-        GameLoopResizeFunction onResize: null,
-        GameLoopTouchEventFunction onTouchEnd: null,
-        GameLoopTouchEventFunction onTouchStart: null }) {
-    this.onFullScreenChange = onFullScreenChange;
-    this.onKeyDown = onKeyDown;
-    this.onPointerLockChange = onPointerLockChange;
-    this.onRender = onRender;
-    this.onResize = onResize;
-    this.onTouchEnd = onTouchEnd;
-    this.onTouchStart = onTouchStart;
+abstract class GameLoopHtmlState extends GameLoopState {
+  void onFullScreenChange(GameLoop gameLoop);
+  void onKeyDown(KeyboardEvent event);
+  void onPointerLockChange(GameLoop gameLoop);
+  void onRender(GameLoop gameLoop);
+  void onResize(GameLoop gameLoop);
+  void onTouchEnd(GameLoop gameLoop, GameLoopTouch touch);
+  void onTouchStart(GameLoop gameLoop, GameLoopTouch touch);
+}
+
+class SimpleHtmlState extends GameLoopHtmlState {
+  GameLoopRenderFunction _onRender = (GameLoop loop) { };
+  GameLoopResizeFunction _onResize = (GameLoop loop) { };
+  GameLoopFullscreenChangeFunction _onFullscreenChange =
+      (GameLoop gameLoop) { };
+  GameLoopPointerLockChangeFunction _onPointerLockChange =
+      (GameLoop gameLoop) { };
+  GameLoopTouchEventFunction _onTouchStart =
+      (GameLoop gameLoop, GameLoopTouch touch) { };
+  GameLoopTouchEventFunction _onTouchEnd =
+      (GameLoop gameLoop, GameLoopTouch touch) { };
+  GameLoopKeyDownHandler _onKeyDown = (KeyboardEvent event) { };
+  GameLoopUpdateFunction _onUpdate = (GameLoop gameLoop) { };
+
+  SimpleHtmlState({
+    GameLoopRenderFunction onRender: null,
+    GameLoopResizeFunction onResize: null,
+    GameLoopFullscreenChangeFunction onFullscreenChange: null,
+    GameLoopPointerLockChangeFunction onPointerLockChange: null,
+    GameLoopTouchEventFunction onTouchStart: null,
+    GameLoopTouchEventFunction onTouchEnd: null,
+    GameLoopKeyDownHandler onKeyDown: null,
+    GameLoopUpdateFunction onUpdate: null
+  }) {
+    if (onRender != null) {
+      _onRender = onRender;
+    }
+
+    if (onResize != null) {
+      _onResize = onResize;
+    }
+
+    if (onFullscreenChange != null) {
+      _onFullscreenChange = onFullscreenChange;
+    }
+
+    if (onPointerLockChange != null) {
+      _onPointerLockChange = onPointerLockChange;
+    }
+
+    if (onTouchStart != null) {
+      _onTouchStart = onTouchStart;
+    }
+
+    if (onTouchEnd != null) {
+      _onTouchEnd = onTouchEnd;
+    }
+
+    if (onKeyDown != null) {
+      _onKeyDown = onKeyDown;
+    }
+
+    if (onUpdate != null) {
+      _onUpdate = onUpdate;
+    }
+  }
+
+  void onFullScreenChange(GameLoop gameLoop) {
+    _onFullscreenChange(gameLoop);
+  }
+
+  void onKeyDown(KeyboardEvent event) {
+    _onKeyDown(event);
+  }
+
+  void onPointerLockChange(GameLoop gameLoop) {
+    _onPointerLockChange(gameLoop);
+  }
+
+  void onRender(GameLoop gameLoop) {
+    _onRender(gameLoop);
+  }
+
+  void onResize(GameLoop gameLoop) {
+    _onResize(gameLoop);
+  }
+
+  void onTouchEnd(GameLoop gameLoop, GameLoopTouch touch) {
+    _onTouchEnd(gameLoop, touch);
+  }
+
+  void onTouchStart(GameLoop gameLoop, GameLoopTouch touch) {
+    _onTouchStart(gameLoop, touch);
+  }
+
+  void onUpdate(GameLoop gameLoop) {
+    _onUpdate(gameLoop);
   }
 }
