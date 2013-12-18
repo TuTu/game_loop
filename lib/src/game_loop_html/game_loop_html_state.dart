@@ -123,3 +123,58 @@ class SimpleHtmlState extends GameLoopHtmlState {
     _onUpdate(gameLoop);
   }
 }
+
+typedef void MenuStateSelectedFunction();
+
+class MenuOption {
+  String text;
+  MenuStateSelectedFunction onSelected;
+
+  MenuOption(this.text, this.onSelected);
+}
+
+abstract class MenuState extends GameLoopHtmlState {
+  List<MenuOption> options;
+  int selected;
+
+  MenuState(this.options, [ this.selected = 0 ]);
+
+  _selectPrev() {
+    selected = selected - 1;
+    if (selected < 0) {
+      selected = options.length - 1;
+    }
+  }
+
+  _selectNext() {
+    selected = selected + 1;
+    if (selected >= options.length){
+      selected = 0;
+    }
+  }
+
+  _selectOption() {
+    options[selected].onSelected();
+  }
+
+  void onKeyDown(KeyboardEvent event) {
+    event.preventDefault();
+
+    switch (event.which) {
+      case Keyboard.DOWN:
+      case Keyboard.J:
+        _selectNext();
+        break;
+
+      case Keyboard.UP:
+      case Keyboard.K:
+        _selectPrev();
+        break;
+
+      case Keyboard.ENTER:
+      case Keyboard.SPACE:
+        _selectOption();
+        break;
+    }
+  }
+}
