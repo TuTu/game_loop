@@ -29,7 +29,7 @@ GameLoopHtmlState initial_state =
         print("Key event");
         print("Switching to $custom_state_1");
         print("Rendering with ${custom_state_1.onRender}}");
-        gameLoop.setState(custom_state_1);
+        gameLoop.state = custom_state_1;
       });
 
 // Create a CustomState class with unique state properties
@@ -46,7 +46,7 @@ class CustomState extends GameLoopHtmlState {
     event.preventDefault();
 
     print("Key event");
-    gameLoop.setState(nextState);
+    gameLoop.state = nextState;
   }
 
   onRender(GameLoopHtml gameLoop) {
@@ -126,8 +126,8 @@ class CanvasMenuState extends MenuState {
 
 CanvasMenuState menu_state =
   new CanvasMenuState(canvas,
-    [ new MenuOption("Start", () { gameLoop.setState(initial_state); }),
-      new MenuOption("Quit", () { gameLoop.setState(quit_state); } )]);
+    [ new MenuOption("Start", () { gameLoop.state = initial_state; }),
+      new MenuOption("Quit", () { gameLoop.state = quit_state; } )]);
 
 SimpleHtmlState quit_state = new SimpleHtmlState(onRender: (loop) {
   drawText(canvas, "QUIT!!");
@@ -138,7 +138,7 @@ main() {
   gameLoop = new GameLoopHtml(element);
   canvas = element.context2D;
 
-  gameLoop.setState(initial_state);
+  gameLoop.state = initial_state;
 
   gameLoop.start();
 }

@@ -381,15 +381,19 @@ class GameLoopHtml extends GameLoop {
   /** Called when key is down. */
   GameLoopKeyDownHandler onKeyDown;
 
-  setState(GameLoopHtmlState state) {
-    super.setState(state);
-    
-    onFullscreenChange  = state.onFullScreenChange;
-    onKeyDown           = state.onKeyDown;
-    onPointerLockChange = state.onPointerLockChange;
-    onRender            = state.onRender;
-    onResize            = state.onResize;
-    onTouchEnd          = state.onTouchEnd;
-    onTouchStart        = state.onTouchStart;
-  }
+  GameLoopHtmlState _state;
+
+  GameLoopState get state => _state;
+                set state (GameLoopHtmlState state) {
+                  _state = state;
+                  onUpdate = state.onUpdate;
+
+                  onFullscreenChange  = state.onFullScreenChange;
+                  onKeyDown           = state.onKeyDown;
+                  onPointerLockChange = state.onPointerLockChange;
+                  onRender            = state.onRender;
+                  onResize            = state.onResize;
+                  onTouchEnd          = state.onTouchEnd;
+                  onTouchStart        = state.onTouchStart;
+                }
 }

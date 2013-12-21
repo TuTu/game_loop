@@ -25,10 +25,10 @@ part of game_loop_common;
  * This is very useful if your game switches back and forth between sets of
  * handlers (such as switching from an intro, menu, or gameplay state.)
  *
- * Use GameLoop#setState() to set the games current state:
+ * Use `GameLoop``s `state` property to set the games current state:
  *
  *     menu_state = new SimpleState(onUpdate: (gameLoop) { ... });
- *     gameLoop.setState(menu_state);
+ *     gameLoop.state = menu_state;
  *
  * If you want to track state specific information, you should consider creating
  * a subclass of GameState. You can then pass this in to the GameLoop.
@@ -52,7 +52,7 @@ part of game_loop_common;
  * other.
  *
  *     custom_menu_state = new MenuState(['Start', 'Quit'], 0);
- *     gameLoop.setState(custom_menu_state);
+ *     gameLoop.state = custom_menu_state;
  *
  * See the /examples folder for a working example.
  */
