@@ -47,8 +47,7 @@ typedef void GameLoopKeyDownHandler(KeyboardEvent event);
 
 /** The game loop */
 class GameLoopHtml extends GameLoop {
-  final Element element;
-  final bool processAllKeyboardEvents;
+  final Element element; 
   int _frameCounter = 0;
   bool _initialized = false;
   bool _interrupt = false;
@@ -79,6 +78,12 @@ class GameLoopHtml extends GameLoop {
   /** The minimum amount of time between two onResize calls in seconds*/
   double resizeLimit = 0.05;
 
+  /** If [processAllKeyboardEvents] is false, keyboard events are only processed, 
+   * if the body is the active element. That means that no keyboard events are 
+   * processed while input elements ar focused.
+   */
+  bool processAllKeyboardEvents = true;
+
   PointerLock _pointerLock;
   PointerLock get pointerLock => _pointerLock;
 
@@ -96,12 +101,8 @@ class GameLoopHtml extends GameLoop {
   GameLoopTouchSet _touchSet;
   GameLoopTouchSet get touchSet => _touchSet;
 
-  /** Construct a new game loop attaching it to [element]. 
-   * If [processAllKeyboardEvents] is false, keyboard events are only processed, 
-   * if the body is the active element. That means while input elements are 
-   * focused, no keyboard events are processed. 
-   */
-  GameLoopHtml(this.element, {this.processAllKeyboardEvents: true}) : super() {
+  /** Construct a new game loop attaching it to [element]. */
+  GameLoopHtml(this.element) : super() {
     _keyboard = new Keyboard(this);
     _mouse = new Mouse(this);
     _gamepad0 = new GameLoopGamepad(this);
@@ -116,6 +117,9 @@ class GameLoopHtml extends GameLoop {
   }
 
   void _processKeyboardEvents() {
+    // If processAllKeyboardEvents is false, before processing the keyboard events, 
+    // check if they should be processed or if they are processed by another
+    // element, like an input element.
     if(processAllKeyboardEvents || document.activeElement == document.body) {
       for (KeyboardEvent keyboardEvent in _keyboardEvents) {
         DigitalButtonEvent event;
