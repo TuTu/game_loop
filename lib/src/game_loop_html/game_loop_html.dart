@@ -212,7 +212,6 @@ class GameLoopHtml extends GameLoop {
       return;
     }
     _rafId = window.requestAnimationFrame(_requestAnimationFrame);
-    _frameCounter++;
     _previousFrameTime = _frameTime;
     _frameTime = time;
     double timeDelta = _frameTime - _previousFrameTime;
@@ -222,9 +221,10 @@ class GameLoopHtml extends GameLoop {
       // a huge time delta. Clamp it to something reasonable.
       _accumulatedTime = maxAccumulatedTime;
     }
-    // TODO(johnmccutchan): Process input events in update loop.
-    _processInputEvents();
     while (_accumulatedTime >= updateTimeStep) {
+      _frameCounter++;
+      _processInputEvents();
+
       processTimers();
       _gameTime += updateTimeStep;
       if (onUpdate != null) {
