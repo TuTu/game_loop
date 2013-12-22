@@ -78,10 +78,10 @@ class GameLoopHtml extends GameLoop {
   /** The minimum amount of time between two onResize calls in seconds*/
   double resizeLimit = 0.05;
 
-  /** If [processAllKeyboardEvents] is false, keyboard events are only processed, 
-   * if the body is the active element. That means that no keyboard events are 
-   * processed while input elements ar focused.
-   */
+  /// If [processAllKeyboardEvents] is false, keyboard events are only processed, 
+  /// if the body is the active element. That means that no keyboard events are 
+  /// processed while input elements are focused.
+  ///
   bool processAllKeyboardEvents = true;
 
   PointerLock _pointerLock;
