@@ -7,30 +7,34 @@ CanvasRenderingContext2D canvas;
 const int WIDTH = 640;
 const int HEIGHT = 480;
 
-drawText(CanvasRenderingContext2D canvas, String text) {
+drawText(CanvasRenderingContext2D canvas, String text, String color) {
   canvas.clearRect(0, 0, WIDTH, HEIGHT);
+  canvas.fillStyle = color;
+  canvas.fillRect(0, 0, WIDTH, HEIGHT);
   canvas.font = "italic bold 24px sans-serif";
   canvas.strokeText(text, 0, 100);
 }
 
-// Create a simple state which no custom methods or state properties
+// Create a simple state implementing only the handlers you care about
+class InitialState extends SimpleHtmlState {
+  void onRender(GameLoop gameLoop) {
+    print("Render initial_state");
+    drawText(canvas, "Initial State", "rgb(255,0,102)");
+  }
+
+  void onKeyDown(KeyboardEvent event) {
+    event.preventDefault();
+
+    print("Key event");
+    print("Switching to $custom_state_1");
+    print("Rendering with ${custom_state_1.onRender}}");
+    gameLoop.state = custom_state_1;
+  }
+}
 //
 // To do this without creating a custom class, just pass your unique handler
 // functions in to the `GameLoopHtmlState` constructor.
-GameLoopHtmlState initial_state =
-  new SimpleHtmlState(
-      onRender: (GameLoopHtml loop) {
-        print("Render initial_state");
-        drawText(canvas, "Initial State");
-      },
-      onKeyDown: (KeyboardEvent event) {
-        event.preventDefault();
-
-        print("Key event");
-        print("Switching to $custom_state_1");
-        print("Rendering with ${custom_state_1.onRender}}");
-        gameLoop.state = custom_state_1;
-      });
+GameLoopHtmlState initial_state = new InitialState();
 
 // Create a CustomState class with unique state properties
 //
@@ -51,7 +55,7 @@ class CustomState extends GameLoopHtmlState {
 
   onRender(GameLoopHtml gameLoop) {
     print("Render $name");
-    drawText(canvas, name);
+    drawText(canvas, name, "rgb(255,165,0)");
 
     _renderSquare();
   }
@@ -96,7 +100,7 @@ class CanvasMenuState extends MenuState {
 
   void onRender(GameLoop gameLoop) {
     print("Rendering Menu");
-    drawText(canvas, options[selected].text);
+    drawText(canvas, options[selected].text, "rgb(127,255,212)");
   }
 
   void onFullScreenChange(GameLoop gameLoop) {
@@ -129,9 +133,16 @@ CanvasMenuState menu_state =
     [ new MenuOption("Start", () { gameLoop.state = initial_state; }),
       new MenuOption("Quit", () { gameLoop.state = quit_state; } )]);
 
-SimpleHtmlState quit_state = new SimpleHtmlState(onRender: (loop) {
-  drawText(canvas, "QUIT!!");
-});
+class QuitState extends SimpleHtmlState {
+  void onRender(GameLoopHtml gameLoop) {
+    drawText(canvas, "QUIT!!", "rgb(0,255,127)");
+  }
+
+  void onKeyDown(KeyboardEvent event) {
+    event.preventDefault();
+  }
+}
+SimpleHtmlState quit_state = new QuitState();
 
 main() {
   CanvasElement element = querySelector(".game-element");

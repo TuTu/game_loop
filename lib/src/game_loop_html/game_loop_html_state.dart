@@ -34,94 +34,62 @@ abstract class GameLoopHtmlState extends GameLoopState {
   void onTouchStart(GameLoop gameLoop, GameLoopTouch touch);
 }
 
+/**
+ * SimpleState provides default implementations of all the common handlers
+ * which you can then override with your own implementations.
+ *
+ * Look at the documentation for `GameLoopHtmlState` for a description of each
+ * handler.
+ */
 class SimpleHtmlState extends GameLoopHtmlState {
-  GameLoopRenderFunction _onRender = (GameLoop loop) { };
-  GameLoopResizeFunction _onResize = (GameLoop loop) { };
-  GameLoopFullscreenChangeFunction _onFullscreenChange =
-      (GameLoop gameLoop) { };
-  GameLoopPointerLockChangeFunction _onPointerLockChange =
-      (GameLoop gameLoop) { };
-  GameLoopTouchEventFunction _onTouchStart =
-      (GameLoop gameLoop, GameLoopTouch touch) { };
-  GameLoopTouchEventFunction _onTouchEnd =
-      (GameLoop gameLoop, GameLoopTouch touch) { };
-  GameLoopKeyDownHandler _onKeyDown = (KeyboardEvent event) { };
-  GameLoopUpdateFunction _onUpdate = (GameLoop gameLoop) { };
 
-  SimpleHtmlState({
-    GameLoopRenderFunction onRender: null,
-    GameLoopResizeFunction onResize: null,
-    GameLoopFullscreenChangeFunction onFullscreenChange: null,
-    GameLoopPointerLockChangeFunction onPointerLockChange: null,
-    GameLoopTouchEventFunction onTouchStart: null,
-    GameLoopTouchEventFunction onTouchEnd: null,
-    GameLoopKeyDownHandler onKeyDown: null,
-    GameLoopUpdateFunction onUpdate: null
-  }) {
-    if (onRender != null) {
-      _onRender = onRender;
-    }
+  /**
+   * Calling this handler has no affect. Override this handler to implement
+   * your behaviour.
+   */
+  void onFullScreenChange(GameLoop gameLoop) { }
 
-    if (onResize != null) {
-      _onResize = onResize;
-    }
+  /**
+   * Calling this handler has no affect. Override this handler to implement
+   * your behaviour.
+   */
+  void onKeyDown(KeyboardEvent event) { }
 
-    if (onFullscreenChange != null) {
-      _onFullscreenChange = onFullscreenChange;
-    }
+  /**
+   * Calling this handler has no affect. Override this handler to implement
+   * your behaviour.
+   */
+  void onPointerLockChange(GameLoop gameLoop) { }
 
-    if (onPointerLockChange != null) {
-      _onPointerLockChange = onPointerLockChange;
-    }
+  /**
+   * Calling this handler has no affect. Override this handler to implement
+   * your behaviour.
+   */
+  void onRender(GameLoop gameLoop) { }
 
-    if (onTouchStart != null) {
-      _onTouchStart = onTouchStart;
-    }
+  /**
+   * Calling this handler has no affect. Override this handler to implement
+   * your behaviour.
+   */
+  void onResize(GameLoop gameLoop) { }
 
-    if (onTouchEnd != null) {
-      _onTouchEnd = onTouchEnd;
-    }
+  /**
+   * Calling this handler has no affect. Override this handler to implement
+   * your behaviour.
+   */
+  void onTouchEnd(GameLoop gameLoop, GameLoopTouch touch) { }
 
-    if (onKeyDown != null) {
-      _onKeyDown = onKeyDown;
-    }
+  /**
+   * Calling this handler has no affect. Override this handler to implement
+   * your behaviour.
+   */
+  void onTouchStart(GameLoop gameLoop, GameLoopTouch touch) { }
 
-    if (onUpdate != null) {
-      _onUpdate = onUpdate;
-    }
-  }
-
-  void onFullScreenChange(GameLoop gameLoop) {
-    _onFullscreenChange(gameLoop);
-  }
-
-  void onKeyDown(KeyboardEvent event) {
-    _onKeyDown(event);
-  }
-
-  void onPointerLockChange(GameLoop gameLoop) {
-    _onPointerLockChange(gameLoop);
-  }
-
-  void onRender(GameLoop gameLoop) {
-    _onRender(gameLoop);
-  }
-
-  void onResize(GameLoop gameLoop) {
-    _onResize(gameLoop);
-  }
-
-  void onTouchEnd(GameLoop gameLoop, GameLoopTouch touch) {
-    _onTouchEnd(gameLoop, touch);
-  }
-
-  void onTouchStart(GameLoop gameLoop, GameLoopTouch touch) {
-    _onTouchStart(gameLoop, touch);
-  }
-
-  void onUpdate(GameLoop gameLoop) {
-    _onUpdate(gameLoop);
-  }
+  /**
+   * Calling this handler has no affect. Override this handler to implement
+   * your behaviour.
+   */
+  void onUpdate(GameLoop gameLoop) { }
 }
 
 typedef void MenuStateSelectedFunction();

@@ -60,16 +60,18 @@ abstract class GameLoopState {
   void onUpdate(GameLoop gameLoop);
 }
 
+/**
+ * SimpleState provides default implementations of all the common handlers
+ * which you can then override with your own implementations.
+ *
+ * Look at the documentation for `GameLoopState` for a description of each
+ * handler.
+ */
 class SimpleState extends GameLoopState {
-  GameLoopUpdateFunction _onUpdate = (GameLoop gameLoop) { };
 
-  SimpleState({GameLoopUpdateFunction onUpdate: null}) {
-    if (onUpdate != null) {
-      _onUpdate = onUpdate;
-    }
-  }
-
-  void onUpdate(GameLoop gameLoop) {
-    _onUpdate(gameLoop);
-  }
+  /**
+   * Calling this handler has no affect. Override this handler to implement
+   * your behaviour.
+   */
+  void onUpdate(GameLoop gameLoop) { }
 }
