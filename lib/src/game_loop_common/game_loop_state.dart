@@ -25,7 +25,7 @@ part of game_loop_common;
  * This is very useful if your game switches back and forth between sets of
  * handlers (such as switching from an intro, menu, or gameplay state.)
  *
- * Use `GameLoop``s `state` property to set the games current state:
+ * Use `GameLoop.state` property to set the games current state:
  *
  *     state = new ColorState("rgba(255, 0, 0, 0)");
  *     gameLoop.state = state;
@@ -39,7 +39,7 @@ part of game_loop_common;
  *         ColorState(this.backgroundColor);
  *
  *         onRender(GameLoop gameLoop) {
- *           // SINP! RENDER THE STATE HERE...
+ *           // SNIP! RENDER THE STATE HERE...
  *         }
  *
  *         // SNIP! UNUSED HANDLERS REMOVED FOR CLARITY...

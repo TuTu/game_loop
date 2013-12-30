@@ -33,12 +33,3 @@ abstract class GameLoopHtmlState extends GameLoopState {
   void onTouchEnd(GameLoop gameLoop, GameLoopTouch touch);
   void onTouchStart(GameLoop gameLoop, GameLoopTouch touch);
 }
-
-typedef void MenuStateSelectedFunction();
-
-class MenuOption {
-  String text;
-  MenuStateSelectedFunction onSelected;
-
-  MenuOption(this.text, this.onSelected);
-}
