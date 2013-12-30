@@ -99,4 +99,12 @@ abstract class GameLoop {
 
   /** Called once per game logic frame. */
   GameLoopUpdateFunction onUpdate;
+
+  GameLoopState _state;
+
+  GameLoopState get state => _state;
+                set state(GameLoopState state) {
+                  _state = state;
+                  onUpdate = state.onUpdate;
+                }
 }
