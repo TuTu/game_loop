@@ -384,7 +384,7 @@ class GameLoopHtml extends GameLoop {
   GameLoopHtmlState _state;
 
   GameLoopState get state => _state;
-                set state (GameLoopHtmlState state) {
+                set state(GameLoopHtmlState state) {
                   _state = state;
                   onUpdate = state.onUpdate;
 

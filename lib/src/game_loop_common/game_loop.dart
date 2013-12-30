@@ -103,7 +103,7 @@ abstract class GameLoop {
   GameLoopState _state;
 
   GameLoopState get state => _state;
-                set state (GameLoopState state) {
+                set state(GameLoopState state) {
                   _state = state;
                   onUpdate = state.onUpdate;
                 }
