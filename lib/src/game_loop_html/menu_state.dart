@@ -20,20 +20,6 @@
 
 part of game_loop_html;
 
-/** A set of GameLoop handlers for HTML games.
- *
- * See GameLoopState for an example of creating and using a GameState.
- */
-abstract class GameLoopHtmlState extends GameLoopState {
-  void onFullScreenChange(GameLoop gameLoop);
-  void onKeyDown(KeyboardEvent event);
-  void onPointerLockChange(GameLoop gameLoop);
-  void onRender(GameLoop gameLoop);
-  void onResize(GameLoop gameLoop);
-  void onTouchEnd(GameLoop gameLoop, GameLoopTouch touch);
-  void onTouchStart(GameLoop gameLoop, GameLoopTouch touch);
-}
-
 typedef void MenuStateSelectedFunction();
 
 class MenuOption {
@@ -41,4 +27,50 @@ class MenuOption {
   MenuStateSelectedFunction onSelected;
 
   MenuOption(this.text, this.onSelected);
+}
+
+abstract class MenuState extends GameLoopHtmlState {
+  List<MenuOption> options;
+  int selected;
+
+  MenuState(this.options, [ this.selected = 0 ]);
+
+  _selectPrev() {
+    selected = selected - 1;
+    if (selected < 0) {
+      selected = options.length - 1;
+    }
+  }
+
+  _selectNext() {
+    selected = selected + 1;
+    if (selected >= options.length){
+      selected = 0;
+    }
+  }
+
+  _selectOption() {
+    options[selected].onSelected();
+  }
+
+  void onKeyDown(KeyboardEvent event) {
+    event.preventDefault();
+
+    switch (event.which) {
+      case Keyboard.DOWN:
+      case Keyboard.J:
+        _selectNext();
+        break;
+
+      case Keyboard.UP:
+      case Keyboard.K:
+        _selectPrev();
+        break;
+
+      case Keyboard.ENTER:
+      case Keyboard.SPACE:
+        _selectOption();
+        break;
+    }
+  }
 }

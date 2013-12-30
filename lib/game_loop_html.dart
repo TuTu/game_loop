@@ -31,3 +31,5 @@ part 'src/game_loop_html/game_loop_gamepad.dart';
 part 'src/game_loop_html/game_loop_pointer_lock.dart';
 part 'src/game_loop_html/game_loop_touch.dart';
 part 'src/game_loop_html/game_loop_html_state.dart';
+part 'src/game_loop_html/simple_html_state.dart';
+part 'src/game_loop_html/menu_state.dart';

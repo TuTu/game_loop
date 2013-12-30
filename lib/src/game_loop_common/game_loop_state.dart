@@ -20,58 +20,39 @@
 
 part of game_loop_common;
 
-/** Collects together a set of GameLoop handlers into a single object.
+/** Collects together a set of `GameLoop` handlers into a single object.
  *
  * This is very useful if your game switches back and forth between sets of
  * handlers (such as switching from an intro, menu, or gameplay state.)
  *
  * Use `GameLoop``s `state` property to set the games current state:
  *
- *     menu_state = new SimpleState(onUpdate: (gameLoop) { ... });
- *     gameLoop.state = menu_state;
+ *     state = new ColorState("rgba(255, 0, 0, 0)");
+ *     gameLoop.state = state;
  *
- * If you want to track state specific information, you should consider creating
- * a subclass of GameState. You can then pass this in to the GameLoop.
+ * To create your own state, extend `GameLoopState` or `GameLoopHtmlState` and
+ * implement each of the states handlers.
  *
- *     class MenuState extends GameLoopHtmlState {
- *         List<String> options;
- *         int selected;
+ *     class ColorState extends GameLoopHtmlState {
+ *         String backgroundColor;
  *
- *         MenuState(this.options, this.selected);
+ *         ColorState(this.backgroundColor);
  *
  *         onRender(GameLoop gameLoop) {
- *           // SINP! RENDER THE MENU HERE...
+ *           // SINP! RENDER THE STATE HERE...
  *         }
  *
  *         // SNIP! UNUSED HANDLERS REMOVED FOR CLARITY...
  *     }
  *
- * Look at SimpleState and SimpleHtmlState for examples.
+ * For examples look at `MenuState` or look in the /examples folder of this
+ * package.
  *
- * You can then create an instance of this custom state and set it like any
- * other.
- *
- *     custom_menu_state = new MenuState(['Start', 'Quit'], 0);
- *     gameLoop.state = custom_menu_state;
- *
- * See the /examples folder for a working example.
+ * Developers who are already familiar with each of the `GameLoop` handlers and
+ * wish to write more concise code, may find `SimpleState` and `SimpleHtmlState`
+ * handy. These provide simple no-op implementations of each of the `GameLoop`
+ * handlers, and only require you to override the handlers you're interested in.
  */
 abstract class GameLoopState {
   void onUpdate(GameLoop gameLoop);
-}
-
-/**
- * SimpleState provides default implementations of all the common handlers
- * which you can then override with your own implementations.
- *
- * Look at the documentation for `GameLoopState` for a description of each
- * handler.
- */
-class SimpleState extends GameLoopState {
-
-  /**
-   * Calling this handler has no affect. Override this handler to implement
-   * your behaviour.
-   */
-  void onUpdate(GameLoop gameLoop) { }
 }

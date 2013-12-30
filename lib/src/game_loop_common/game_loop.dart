@@ -100,7 +100,6 @@ abstract class GameLoop {
   /** Called once per game logic frame. */
   GameLoopUpdateFunction onUpdate;
 
-  /** Replace the current GameState queue with this single GameState. **/
   GameLoopState _state;
 
   GameLoopState get state => _state;
