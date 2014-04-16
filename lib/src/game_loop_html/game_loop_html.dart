@@ -142,7 +142,7 @@ class GameLoopHtml extends GameLoop {
     int canvasY = (box.top  + window.pageYOffset - docElem.clientTop).floor();
     for (MouseEvent mouseEvent in _mouseEvents) {
       bool moveEvent = mouseEvent.type == 'mousemove';
-      bool wheelEvent = mouseEvent.type == 'wheel';
+      bool wheelEvent = mouseEvent.type == 'wheel' || mouseEvent.type == 'mousewheel';
       bool down = mouseEvent.type == 'mousedown';
       double time = GameLoop.timeStampToSeconds(mouseEvent.timeStamp);
       if (moveEvent) {
