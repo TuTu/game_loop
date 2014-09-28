@@ -52,7 +52,7 @@ import 'package:game_loop/game_loop_isolate.dart';
 
 ## API ##
 
-[Reference Manual](http://johnmccutchan.github.io/)
+[Reference Manual](http://www.dartdocs.org/documentation/game_loop/latest)
 
 ## Samples ##
 
