@@ -47,7 +47,7 @@ typedef void GameLoopKeyDownHandler(KeyboardEvent event);
 
 /** The game loop */
 class GameLoopHtml extends GameLoop {
-  final Element element; 
+  final Element element;
   int _frameCounter = 0;
   bool _initialized = false;
   bool _interrupt = false;
@@ -78,8 +78,8 @@ class GameLoopHtml extends GameLoop {
   /** The minimum amount of time between two onResize calls in seconds*/
   double resizeLimit = 0.05;
 
-  /// If [processAllKeyboardEvents] is false, keyboard events are only processed, 
-  /// if the body is the active element. That means that no keyboard events are 
+  /// If [processAllKeyboardEvents] is false, keyboard events are only processed,
+  /// if the body is the active element. That means that no keyboard events are
   /// processed while input elements are focused.
   ///
   bool processAllKeyboardEvents = true;
@@ -101,6 +101,10 @@ class GameLoopHtml extends GameLoop {
   GameLoopTouchSet _touchSet;
   GameLoopTouchSet get touchSet => _touchSet;
 
+  /// True if the offset is going to be always (0,0) instead of being calculated.
+  /// Useful for accelerated canvas engines with no full DOM implementation.
+  bool forceFullScreenOffset = false;
+
   /** Construct a new game loop attaching it to [element]. */
   GameLoopHtml(this.element) : super() {
     _keyboard = new Keyboard(this);
@@ -117,7 +121,7 @@ class GameLoopHtml extends GameLoop {
   }
 
   void _processKeyboardEvents() {
-    // If processAllKeyboardEvents is false, before processing the keyboard events, 
+    // If processAllKeyboardEvents is false, before processing the keyboard events,
     // check if they should be processed or if they are processed by another
     // element, like an input element.
     if(processAllKeyboardEvents || document.activeElement == document.body) {
@@ -135,11 +139,22 @@ class GameLoopHtml extends GameLoop {
 
   void _processMouseEvents() {
     mouse._resetAccumulators();
+
     // TODO(alexgann): Remove custom offset logic once dart:html supports natively (M6).
-    final docElem = document.documentElement;
-    final box = element.getBoundingClientRect();
-    int canvasX = (box.left + window.pageXOffset - docElem.clientLeft).floor();
-    int canvasY = (box.top  + window.pageYOffset - docElem.clientTop).floor();
+    int canvasX = 0;
+    int canvasY = 0;
+    if (!forceFullScreenOffset) {
+      try {
+        final docElem = document.documentElement;
+        final box = element.getBoundingClientRect();
+        canvasX = (box.left + window.pageXOffset - docElem.clientLeft).floor();
+        canvasY = (box.top  + window.pageYOffset - docElem.clientTop).floor();
+      } catch (_) {
+
+        forceFullScreenOffset = true;
+      }
+    }
+
     for (MouseEvent mouseEvent in _mouseEvents) {
       bool moveEvent = mouseEvent.type == 'mousemove';
       bool wheelEvent = mouseEvent.type == 'wheel' || mouseEvent.type == 'mousewheel';
