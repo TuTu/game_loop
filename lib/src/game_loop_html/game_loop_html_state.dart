@@ -27,9 +27,14 @@ part of game_loop_html;
 abstract class GameLoopHtmlState extends GameLoopState {
   void onFullScreenChange(GameLoop gameLoop);
   void onKeyDown(KeyboardEvent event);
+  void onKeyUp(KeyboardEvent event);
   void onPointerLockChange(GameLoop gameLoop);
   void onRender(GameLoop gameLoop);
   void onResize(GameLoop gameLoop);
   void onTouchEnd(GameLoop gameLoop, GameLoopTouch touch);
   void onTouchStart(GameLoop gameLoop, GameLoopTouch touch);
+  void onMouseWheel(WheelEvent event);
+  void onMouseUp(MouseEvent event);
+  void onMouseDown(MouseEvent event);
+  void onMouseMove(MouseEvent event);
 }

@@ -45,6 +45,17 @@ typedef void GameLoopTouchEventFunction(GameLoop gameLoop, GameLoopTouch touch);
  */
 typedef void GameLoopKeyDownHandler(KeyboardEvent event);
 
+/**
+ * Called whenever the mouse wheel is scrolled
+ */
+typedef void GameLoopWheelHandler(WheelEvent event);
+
+/**
+ * Called whenever the mouse is pressed or moved
+ */
+typedef void GameLoopMouseHandler(MouseEvent event);
+
+
 /** The game loop */
 class GameLoopHtml extends GameLoop {
   final Element element;
@@ -314,23 +325,39 @@ class GameLoopHtml extends GameLoop {
   }
 
   void _keyUp(KeyboardEvent event) {
+    if (onKeyUp != null) {
+      onKeyUp(event);
+    }
+
     _keyboardEvents.add(event);
   }
 
   final List<MouseEvent> _mouseEvents = new List<MouseEvent>();
   void _mouseDown(MouseEvent event) {
+    if (onMouseDown != null) {
+      onMouseDown(event);
+    }
     _mouseEvents.add(event);
   }
 
   void _mouseUp(MouseEvent event) {
+    if (onMouseUp != null) {
+      onMouseUp(event);
+    }
     _mouseEvents.add(event);
   }
 
   void _mouseMove(MouseEvent event) {
+    if (onMouseMove != null) {
+      onMouseMove(event);
+    }
     _mouseEvents.add(event);
   }
 
   void _mouseWheel(MouseEvent event) {
+    if (onMouseWheel != null) {
+      onMouseWheel(event);
+    }
     _mouseEvents.add(event);
     event.preventDefault();
   }
@@ -406,6 +433,16 @@ class GameLoopHtml extends GameLoop {
 
   /** Called when key is down. */
   GameLoopKeyDownHandler onKeyDown;
+  /** Called when key is up. */
+  GameLoopKeyDownHandler onKeyUp;
+
+  /** Called when mouse wheel is scrolled. */
+  GameLoopWheelHandler onMouseWheel;
+
+  /** Called when mouse is pressed or moved. */
+  GameLoopMouseHandler onMouseUp;
+  GameLoopMouseHandler onMouseDown;
+  GameLoopMouseHandler onMouseMove;
 
   GameLoopHtmlState _state;
 
@@ -416,10 +453,15 @@ class GameLoopHtml extends GameLoop {
 
                   onFullscreenChange  = state.onFullScreenChange;
                   onKeyDown           = state.onKeyDown;
+                  onKeyUp             = state.onKeyUp;
                   onPointerLockChange = state.onPointerLockChange;
                   onRender            = state.onRender;
                   onResize            = state.onResize;
                   onTouchEnd          = state.onTouchEnd;
                   onTouchStart        = state.onTouchStart;
+                  onMouseWheel        = state.onMouseWheel;
+                  onMouseUp           = state.onMouseUp;
+                  onMouseDown         = state.onMouseDown;
+                  onMouseMove         = state.onMouseMove;
                 }
 }

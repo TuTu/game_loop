@@ -45,6 +45,12 @@ class SimpleHtmlState extends GameLoopHtmlState {
    * Calling this handler has no affect. Override this handler to implement
    * your behaviour.
    */
+  void onKeyUp(KeyboardEvent event) {}
+
+  /**
+   * Calling this handler has no affect. Override this handler to implement
+   * your behaviour.
+   */
   void onPointerLockChange(GameLoop gameLoop) { }
 
   /**
@@ -76,4 +82,28 @@ class SimpleHtmlState extends GameLoopHtmlState {
    * your behaviour.
    */
   void onUpdate(GameLoop gameLoop) { }
+
+  /**
+   * Calling this handler has no affect. Override this handler to implement
+   * your behaviour.
+   */
+  void onMouseWheel(WheelEvent event) { }
+
+  /**
+   * Calling this handler has no affect. Override this handler to implement
+   * your behaviour.
+   */
+  void onMouseDown(MouseEvent event) { }
+
+  /**
+   * Calling this handler has no affect. Override this handler to implement
+   * your behaviour.
+   */
+  void onMouseMove(MouseEvent event) { }
+
+  /**
+   * Calling this handler has no affect. Override this handler to implement
+   * your behaviour.
+   */
+  void onMouseUp(MouseEvent event) { }
 }
